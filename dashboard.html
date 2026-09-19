@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="DrainWatch operational dashboard" />
+    <title>DrainWatch | Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-page="dashboard">
+    <div class="site-shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark">D</div>
+          <div>
+            <strong>DrainWatch</strong>
+            <span>Urban flow intelligence</span>
+          </div>
+        </div>
+
+        <nav class="main-nav">
+          <a href="index.html">Home</a>
+          <a href="reports.html">Report</a>
+          <a href="dashboard.html" class="active">Dashboard</a>
+          <a href="map.html">Map</a>
+          <a href="teams.html">Teams</a>
+        </nav>
+
+        <a class="button primary" href="reports.html">New issue</a>
+      </header>
+
+      <main class="page-shell">
+        <section class="page-header">
+          <div>
+            <span class="eyebrow">Operations</span>
+            <h1>Incident dashboard</h1>
+          </div>
+          <span class="status-pill neutral">Live overview</span>
+        </section>
+
+        <section class="kpi-grid">
+          <div class="kpi-card glass-panel">
+            <span>Open cases</span>
+            <strong id="openCasesValue">0</strong>
+          </div>
+          <div class="kpi-card glass-panel">
+            <span>Escalations</span>
+            <strong id="escalationsValue">0</strong>
+          </div>
+          <div class="kpi-card glass-panel">
+            <span>Resolved</span>
+            <strong id="resolvedValue">0</strong>
+          </div>
+          <div class="kpi-card glass-panel">
+            <span>SLA at risk</span>
+            <strong id="slaValue">0</strong>
+          </div>
+        </section>
+
+        <section class="board-grid">
+          <div class="glass-panel board-panel">
+            <div class="board-head">
+              <h3>Open issue queue</h3>
+              <span class="status-pill neutral">Filtered</span>
+            </div>
+            <div id="issueTable" class="issue-table"></div>
+          </div>
+
+          <div class="glass-panel board-panel">
+            <div class="board-head">
+              <h3>Priority watchlist</h3>
+              <span class="status-pill warning">Escalation</span>
+            </div>
+            <div id="priorityList" class="priority-list"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

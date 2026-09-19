@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="DrainWatch team operations and escalations" />
+    <title>DrainWatch | Teams</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-page="teams">
+    <div class="site-shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark">D</div>
+          <div>
+            <strong>DrainWatch</strong>
+            <span>Urban flow intelligence</span>
+          </div>
+        </div>
+
+        <nav class="main-nav">
+          <a href="index.html">Home</a>
+          <a href="reports.html">Report</a>
+          <a href="dashboard.html">Dashboard</a>
+          <a href="map.html">Map</a>
+          <a href="teams.html" class="active">Teams</a>
+        </nav>
+
+        <a class="button primary" href="reports.html">Submit a report</a>
+      </header>
+
+      <main class="page-shell">
+        <section class="page-header">
+          <div>
+            <span class="eyebrow">Field operations</span>
+            <h1>Escalation and response teams</h1>
+          </div>
+          <span class="status-pill danger">Priority queue</span>
+        </section>
+
+        <section class="team-grid">
+          <article class="glass-panel team-card">
+            <div class="team-badge">North team</div>
+            <h3>Stormwater response unit</h3>
+            <p>Flooding, drainage blockages, road runoff, and storm network maintenance.</p>
+            <ul>
+              <li>Field supervisor: M. S. Nandini</li>
+              <li>3 crews on standby</li>
+              <li>24h dispatch window</li>
+            </ul>
+          </article>
+
+          <article class="glass-panel team-card">
+            <div class="team-badge">East team</div>
+            <h3>Public works unit</h3>
+            <p>Road damage, utility faults, and public infrastructure failures.</p>
+            <ul>
+              <li>Field supervisor: V. Sharma</li>
+              <li>2 crews active</li>
+              <li>48h service target</li>
+            </ul>
+          </article>
+
+          <article class="glass-panel team-card">
+            <div class="team-badge">Central team</div>
+            <h3>Escalation desk</h3>
+            <p>Cross-ward coordination, team assignment, and priority escalations.</p>
+            <ul>
+              <li>Desk lead: A. Reddy</li>
+              <li>Priority review hourly</li>
+              <li>Escalation SLA active</li>
+            </ul>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
