@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Civic reporting portal for reporting civic issues, ward identification, ticket tracking, and escalation workflows."
+    />
+    <title>UrbanCare 360 | Civic Reporting Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-grid"></div>
+    <div class="orb orb-one"></div>
+    <div class="orb orb-two"></div>
+    <div class="orb orb-three"></div>
+
+    <header class="topbar shell">
+      <div class="brand-wrap">
+        <div class="brand-mark">U</div>
+        <div>
+          <div class="brand-name">UrbanCare 360</div>
+          <div class="brand-tag">Smart civic response</div>
+        </div>
+      </div>
+
+      <nav class="topnav" aria-label="Main navigation">
+        <a href="#report-flow">Report</a>
+        <a href="#ward-panel">Ward ID</a>
+        <a href="#ticket-panel">Ticket</a>
+        <a href="#status-board">Status</a>
+        <a href="#escalation-board">Escalation</a>
+      </nav>
+
+      <button class="ghost-btn" type="button">Public dashboard</button>
+    </header>
+
+    <main class="shell">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Civic action platform</p>
+          <h1>Report issues, verify your ward, and track resolution in real time.</h1>
+          <p class="lede">
+            Capture a photo, locate the fault, auto-match the correct local-body ward,
+            create a public ticket, and escalate unresolved problems to the right team.
+          </p>
+
+          <div class="cta-row">
+            <a href="#report-flow" class="primary-btn">Create report</a>
+            <a href="#map-view" class="secondary-btn">Open map</a>
+          </div>
+
+          <div class="hero-metrics">
+            <div class="metric-card">
+              <strong>1.2k</strong>
+              <span>Open cases</span>
+            </div>
+            <div class="metric-card">
+              <strong>84%</strong>
+              <span>Resolved in SLA</span>
+            </div>
+            <div class="metric-card">
+              <strong>32m</strong>
+              <span>Avg. response</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual glass-panel">
+          <div class="visual-head">
+            <span class="dot green"></span>
+            <span class="dot orange"></span>
+            <span class="dot blue"></span>
+          </div>
+
+          <div class="mini-dashboard">
+            <div class="mini-card highlight">
+              <small>Ward match</small>
+              <strong id="miniWard">Ward 12 · Riverside</strong>
+            </div>
+            <div class="mini-stats">
+              <div>
+                <small>Priority</small>
+                <strong>High</strong>
+              </div>
+              <div>
+                <small>Tickets</small>
+                <strong>18</strong>
+              </div>
+            </div>
+            <div class="signal-line">
+              <span class="bar b1"></span>
+              <span class="bar b2"></span>
+              <span class="bar b3"></span>
+              <span class="bar b4"></span>
+              <span class="bar b5"></span>
+              <span class="bar b6"></span>
+            </div>
+            <div class="mini-status-grid">
+              <span class="pill success">Open</span>
+              <span class="pill warning">Escalation</span>
+              <span class="pill info">Verified</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="report-flow" class="report-panel glass-panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Step 1</p>
+            <h2>Report an issue</h2>
+          </div>
+          <span class="status-badge neutral">Public reporting</span>
+        </div>
+
+        <form id="reportForm" class="report-form">
+          <div class="input-grid two-col">
+            <label>
+              <span>Reporter name</span>
+              <input id="reporterName" type="text" value="Aisha Rahman" required />
+            </label>
+
+            <label>
+              <span>Issue category</span>
+              <select id="category" required>
+                <option value="Road damage">Road damage</option>
+                <option value="Water leak">Water leak</option>
+                <option value="Garbage overflow">Garbage overflow</option>
+                <option value="Streetlight outage">Streetlight outage</option>
+                <option value="Drain blockage">Drain blockage</option>
+                <option value="Public safety">Public safety</option>
+              </select>
+            </label>
+          </div>
+
+          <label>
+            <span>Issue title</span>
+            <input id="issueTitle" type="text" value="Broken manhole cover near school gate" required />
+          </label>
+
+          <label>
+            <span>Issue description</span>
+            <textarea id="description" rows="4" required>Large metal cover is cracked and unsafe for pedestrians. Traffic is diverted around the area during school pickup hours.</textarea>
+          </label>
+
+          <div class="location-panel">
+            <div class="location-header">
+              <div>
+                <span class="eyebrow inline">Location</span>
+                <h3>Pinpoint the problem</h3>
+              </div>
+              <button type="button" id="useLocationBtn" class="secondary-btn small-btn">Use my location</button>
+            </div>
+
+            <div class="input-grid two-col">
+              <label>
+                <span>Latitude</span>
+                <input id="latitude" type="number" step="0.000001" value="12.9573" required />
+              </label>
+
+              <label>
+                <span>Longitude</span>
+                <input id="longitude" type="number" step="0.000001" value="77.5999" required />
+              </label>
+            </div>
+          </div>
+
+          <div class="file-panel">
+            <div class="upload-box">
+              <input id="photoInput" type="file" accept="image/*" />
+              <label for="photoInput" class="upload-label">
+                <span class="upload-ico">+</span>
+                <span>Upload photo evidence</span>
+              </label>
+            </div>
+            <div id="previewArea" class="preview-area">
+              <img
+                id="photoPreview"
+                alt="Selected issue preview"
+                src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=80"
+              />
+            </div>
+          </div>
+
+          <div class="submit-row">
+            <button type="submit" class="primary-btn large-btn">Submit report</button>
+            <div id="submissionStatus" class="status-text" aria-live="polite"></div>
+          </div>
+        </form>
+      </section>
+
+      <section class="info-grid">
+        <article id="ward-panel" class="glass-panel card-panel">
+          <div class="section-heading compact">
+            <div>
+              <p class="eyebrow">Step 2</p>
+              <h2>Ward identification</h2>
+            </div>
+            <span class="status-badge success">Auto-matched</span>
+          </div>
+
+          <div id="wardResult" class="ward-result">
+            <div class="ward-title-wrap">
+              <span class="ward-pin">◎</span>
+              <div>
+                <h3>Ward 12 · Riverside</h3>
+                <p>North civic zone · Zone A1</p>
+              </div>
+            </div>
+            <ul class="ward-meta">
+              <li>Ward officer: M. S. Nandini</li>
+              <li>Service area: Central local body</li>
+              <li>Priority: High</li>
+            </ul>
+          </div>
+
+          <div id="wardMap" class="mini-map" aria-label="Ward map"></div>
+        </article>
+
+        <article id="ticket-panel" class="glass-panel card-panel">
+          <div class="section-heading compact">
+            <div>
+              <p class="eyebrow">Step 3</p>
+              <h2>Ticket summary</h2>
+            </div>
+            <span id="ticketStateBadge" class="status-badge warning">Submitted</span>
+          </div>
+
+          <div class="ticket-box">
+            <div class="ticket-head">
+              <span class="ticket-label">Ticket</span>
+              <strong id="ticketCode">CVC-2418</strong>
+            </div>
+            <div class="ticket-body">
+              <p id="ticketSummary">Broken manhole cover near school gate</p>
+              <div class="ticket-meta">
+                <span id="ticketWard">Ward 12 · Riverside</span>
+                <span id="ticketDept">Public works</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="timeline" class="timeline" aria-live="polite"></div>
+        </article>
+      </section>
+
+      <section id="status-board" class="glass-panel board-panel">
+        <div class="section-heading compact">
+          <div>
+            <p class="eyebrow">Step 4</p>
+            <h2>Public status dashboard</h2>
+          </div>
+          <span class="status-badge neutral">Live public feed</span>
+        </div>
+
+        <div id="statusList" class="status-list"></div>
+      </section>
+
+      <section id="map-view" class="glass-panel map-panel">
+        <div class="section-heading compact">
+          <div>
+            <p class="eyebrow">Step 5</p>
+            <h2>Open report map</h2>
+          </div>
+          <span class="status-badge info">Verified reports</span>
+        </div>
+
+        <div id="openMap" aria-label="Open reports map"></div>
+      </section>
+
+      <section id="escalation-board" class="glass-panel escalation-panel">
+        <div class="section-heading compact">
+          <div>
+            <p class="eyebrow">Step 6</p>
+            <h2>Escalation queue</h2>
+          </div>
+          <span class="status-badge danger">Unresolved > 48h</span>
+        </div>
+
+        <div id="escalationList" class="escalation-list"></div>
+      </section>
+    </main>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="app.js"></script>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
