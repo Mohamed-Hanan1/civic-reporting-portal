@@ -3,252 +3,152 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="UrbanCare 360 civic reporting portal" />
-    <title>UrbanCare 360 | Civic Reporting</title>
+    <meta name="description" content="DrainWatch — civic issue reporting and operations portal" />
+    <title>DrainWatch | Civic issue tracking</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
-    <div class="grid"></div>
-
-    <header>
-      <a class="brand" href="#top">
-        <b>U</b>
-        <span>
-          <strong>UrbanCare 360</strong>
-          <small>Smart civic response</small>
-        </span>
-      </a>
-
-      <nav>
-        <a href="#report">Report</a>
-        <a href="#ticket">Ticket</a>
-        <a href="#status">Status</a>
-        <a href="#map">Map</a>
-        <a href="#escalation">Escalation</a>
-      </nav>
-
-      <a class="button ghost" href="#status">Public dashboard</a>
-    </header>
-
-    <main id="top">
-      <section class="hero">
-        <div>
-          <p class="eyebrow">Civic action platform</p>
-          <h1>Turn a street problem into visible action.</h1>
-          <p class="lead">
-            Capture evidence, pinpoint the location, identify the correct ward,
-            create a public ticket, and escalate issues that miss their service deadline.
-          </p>
-
-          <div class="actions">
-            <a class="button" href="#report">Create report</a>
-            <a class="button ghost" href="#map">Open report map</a>
-          </div>
-
-          <div class="metrics">
-            <span><b id="openCount">3</b><small>open cases</small></span>
-            <span><b>84%</b><small>resolved in SLA</small></span>
-            <span><b>32m</b><small>average response</small></span>
-          </div>
-        </div>
-
-        <div class="hero-card">
-          <i></i><i></i><i></i>
-          <div class="signal">
-            <small>WARD MATCH</small>
-            <b id="heroWard">Ward 12 · Riverside</b>
-          </div>
-
-          <div class="bars">
-            <em></em><em></em><em></em><em></em><em></em><em></em>
-          </div>
-
-          <div class="tags">
-            <span>Open</span>
-            <span>Verified</span>
-            <span>Escalation ready</span>
-          </div>
-        </div>
-      </section>
-
-      <section id="report" class="panel">
-        <div class="heading">
+  <body class="home-page">
+    <div class="site-shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark">D</div>
           <div>
-            <p class="eyebrow">Step 1</p>
-            <h2>Report an issue</h2>
+            <strong>DrainWatch</strong>
+            <span>Urban flow intelligence</span>
           </div>
-          <span class="badge">Public reporting</span>
         </div>
 
-        <form id="reportForm">
-          <div class="cols">
-            <label>
-              Reporter name
-              <input id="reporter" value="Aisha Rahman" required />
-            </label>
-            <label>
-              Issue category
-              <select id="category">
-                <option>Road damage</option>
-                <option>Water leak</option>
-                <option>Garbage overflow</option>
-                <option>Streetlight outage</option>
-                <option>Drain blockage</option>
-                <option>Public safety</option>
-              </select>
-            </label>
-          </div>
+        <nav class="main-nav">
+          <a href="index.html" class="active">Home</a>
+          <a href="reports.html">Report</a>
+          <a href="dashboard.html">Dashboard</a>
+          <a href="map.html">Map</a>
+          <a href="teams.html">Teams</a>
+        </nav>
 
-          <label>
-            Issue title
-            <input id="title" value="Broken manhole cover near school gate" required />
-          </label>
+        <a class="button primary" href="reports.html">Submit issue</a>
+      </header>
 
-          <label>
-            Description
-            <textarea id="description" rows="4" required>Large metal cover is cracked and unsafe for pedestrians.</textarea>
-          </label>
+      <main>
+        <section class="hero">
+          <div class="hero-copy">
+            <span class="eyebrow">Civic operations portal</span>
+            <h1>See drainage issues before they become public emergencies.</h1>
+            <p class="lead">
+              DrainWatch helps residents report flooding, blocked drains, road damage, and public utility risks with precise location data, ward matching, and escalation tracking.
+            </p>
 
-          <div class="location">
-            <div class="heading">
-              <div>
-                <p class="eyebrow">Location</p>
-                <h3>Pinpoint the problem</h3>
+            <div class="cta-row">
+              <a href="reports.html" class="button primary large">Create report</a>
+              <a href="dashboard.html" class="button secondary large">View dashboard</a>
+            </div>
+
+            <div class="stats-row">
+              <div class="stat-card">
+                <strong>1,240</strong>
+                <small>Active issues</small>
               </div>
-              <button type="button" class="button ghost small" id="locate">Use my location</button>
+              <div class="stat-card">
+                <strong>84%</strong>
+                <small>SLA compliance</small>
+              </div>
+              <div class="stat-card">
+                <strong>32 min</strong>
+                <small>Avg. response</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-panel glass-panel">
+            <div class="window-bar">
+              <span></span>
+              <span></span>
+              <span></span>
             </div>
 
-            <div class="cols">
-              <label>
-                Latitude
-                <input id="lat" type="number" step="any" value="12.9573" required />
-              </label>
-              <label>
-                Longitude
-                <input id="lng" type="number" step="any" value="77.5999" required />
-              </label>
+            <div class="mini-board">
+              <div class="mini-card highlight">
+                <small>Live ward match</small>
+                <strong id="heroWard">Ward 12 · Riverside</strong>
+              </div>
+
+              <div class="mini-grid">
+                <div>
+                  <small>Severity</small>
+                  <strong>High</strong>
+                </div>
+                <div>
+                  <small>Open tickets</small>
+                  <strong>18</strong>
+                </div>
+              </div>
+
+              <div class="status-bar">
+                <span style="height:22%"></span>
+                <span style="height:40%"></span>
+                <span style="height:66%"></span>
+                <span style="height:49%"></span>
+                <span style="height:88%"></span>
+                <span style="height:72%"></span>
+              </div>
+
+              <div class="mini-tags">
+                <span class="tag success">Open</span>
+                <span class="tag warning">Escalation</span>
+                <span class="tag info">Verified</span>
+              </div>
             </div>
+          </div>
+        </section>
 
-            <p id="wardHint" class="hint">Ward 12 · Riverside will receive this report.</p>
+        <section class="feature-grid">
+          <article class="feature-card glass-panel">
+            <div class="feature-icon">◎</div>
+            <h3>Ward intelligence</h3>
+            <p>Geo-match every submission to the right ward and maintenance team.</p>
+          </article>
+
+          <article class="feature-card glass-panel">
+            <div class="feature-icon">△</div>
+            <h3>Priority routing</h3>
+            <p>Flag urgent weather, flooding, and public hazard conditions automatically.</p>
+          </article>
+
+          <article class="feature-card glass-panel">
+            <div class="feature-icon">✦</div>
+            <h3>Evidence-based fieldwork</h3>
+            <p>Attach photos, timestamps, geolocation, and incident notes before dispatch.</p>
+          </article>
+        </section>
+
+        <section class="split-panel glass-panel">
+          <div class="content">
+            <span class="eyebrow">Operational flow</span>
+            <h2>From citizen report to field action</h2>
+            <ol>
+              <li>Resident submits issue with photo and location.</li>
+              <li>Ward and severity are matched automatically.</li>
+              <li>Issue enters live operations dashboard.</li>
+              <li>Escalation queue routes unresolved items to the right team.</li>
+            </ol>
           </div>
 
-          <div class="upload">
-            <label class="drop">
-              ＋
-              <span>
-                Upload photo evidence
-                <input id="photo" type="file" accept="image/*" />
-              </span>
-            </label>
-
-            <img
-              id="preview"
-              src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=80"
-              alt="Issue preview"
-            />
-          </div>
-
-          <div class="submit">
-            <button class="button" type="submit">Submit report</button>
-            <output id="message"></output>
-          </div>
-        </form>
-      </section>
-
-      <section class="twocol">
-        <article id="ward" class="panel">
-          <div class="heading">
-            <div>
-              <p class="eyebrow">Step 2</p>
-              <h2>Ward identification</h2>
+          <div class="panel-metric">
+            <div class="metric-box">
+              <strong>79%</strong>
+              <span>Resolved in 48h</span>
             </div>
-            <span class="badge green">Auto-matched</span>
-          </div>
-
-          <div class="wardbox">
-            <strong id="wardName">Ward 12 · Riverside</strong>
-            <span id="wardZone">North civic zone · 98% match</span>
-            <hr />
-            <span>Ward officer: M. S. Nandini</span>
-            <span>Service area: Central local body</span>
-            <span>Priority: High</span>
-          </div>
-
-          <div class="mini-map">
-            <span class="map-road r1"></span>
-            <span class="map-road r2"></span>
-            <span class="map-road r3"></span>
-            <b class="pin p1">12</b>
-            <b class="pin p2">18</b>
-            <b class="pin p3">06</b>
-          </div>
-        </article>
-
-        <article id="ticket" class="panel">
-          <div class="heading">
-            <div>
-              <p class="eyebrow">Step 3</p>
-              <h2>Ticket summary</h2>
+            <div class="metric-box">
+              <strong>1,340</strong>
+              <span>Ward inspections completed</span>
             </div>
-            <span id="ticketStatus" class="badge amber">Submitted</span>
           </div>
-
-          <div class="ticket">
-            <small>PUBLIC TICKET</small>
-            <b id="ticketId">CVC-2418</b>
-            <strong id="ticketTitle">Broken manhole cover near school gate</strong>
-            <span>
-              <i id="ticketWard">Ward 12 · Riverside</i>
-              <i>Public works</i>
-            </span>
-          </div>
-
-          <div id="timeline" class="timeline"></div>
-        </article>
-      </section>
-
-      <section id="status" class="panel">
-        <div class="heading">
-          <div>
-            <p class="eyebrow">Step 4</p>
-            <h2>Public status dashboard</h2>
-          </div>
-          <span class="badge">Live feed</span>
-        </div>
-        <div id="statusList" class="cards"></div>
-      </section>
-
-      <section id="map" class="panel">
-        <div class="heading">
-          <div>
-            <p class="eyebrow">Step 5</p>
-            <h2>Open report map</h2>
-          </div>
-          <span class="badge blue">Verified reports</span>
-        </div>
-        <div id="openMap" class="map">
-          <div class="map-label">
-            OPEN CIVIC REPORTS<br />
-            <small>Tap a marker to inspect a public ticket</small>
-          </div>
-        </div>
-      </section>
-
-      <section id="escalation" class="panel">
-        <div class="heading">
-          <div>
-            <p class="eyebrow">Step 6</p>
-            <h2>Escalation queue</h2>
-          </div>
-          <span class="badge red">Unresolved &gt; 48h</span>
-        </div>
-        <div id="escalationList"></div>
-      </section>
-    </main>
-
-    <footer>UrbanCare 360 · Demonstration civic reporting interface</footer>
+        </section>
+      </main>
+    </div>
 
     <script src="app.js"></script>
   </body>
