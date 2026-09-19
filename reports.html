@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Submit a drain or civic issue to DrainWatch" />
+    <title>DrainWatch | Report issue</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-page="reports">
+    <div class="site-shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark">D</div>
+          <div>
+            <strong>DrainWatch</strong>
+            <span>Urban flow intelligence</span>
+          </div>
+        </div>
+
+        <nav class="main-nav">
+          <a href="index.html">Home</a>
+          <a href="reports.html" class="active">Report</a>
+          <a href="dashboard.html">Dashboard</a>
+          <a href="map.html">Map</a>
+          <a href="teams.html">Teams</a>
+        </nav>
+
+        <a class="button primary" href="dashboard.html">Dashboard</a>
+      </header>
+
+      <main class="page-shell">
+        <section class="page-header">
+          <div>
+            <span class="eyebrow">Submit issue</span>
+            <h1>Report a civic or drainage problem</h1>
+          </div>
+          <span class="status-pill neutral">Public reporting</span>
+        </section>
+
+        <section class="report-grid">
+          <div class="glass-panel form-panel">
+            <form id="reportForm">
+              <div class="field-grid two">
+                <label>
+                  Reporter name
+                  <input id="reporter" type="text" value="Aisha Rahman" required />
+                </label>
+
+                <label>
+                  Issue category
+                  <select id="category">
+                    <option>Road damage</option>
+                    <option>Water leak</option>
+                    <option>Garbage overflow</option>
+                    <option>Streetlight outage</option>
+                    <option>Drain blockage</option>
+                    <option>Public safety</option>
+                  </select>
+                </label>
+              </div>
+
+              <label>
+                Issue title
+                <input id="title" type="text" value="Blocked drain near school gate" required />
+              </label>
+
+              <label>
+                Description
+                <textarea id="description" rows="4" required>Surface water is collecting near the pedestrian path and creating a risk for school children.</textarea>
+              </label>
+
+              <div class="location-box">
+                <div class="location-header">
+                  <div>
+                    <span class="eyebrow small">Location</span>
+                    <h3>Pinpoint the issue</h3>
+                  </div>
+                  <button type="button" class="button secondary small" id="locateBtn">Use my location</button>
+                </div>
+
+                <div class="field-grid two">
+                  <label>
+                    Latitude
+                    <input id="lat" type="number" step="any" value="12.9573" required />
+                  </label>
+                  <label>
+                    Longitude
+                    <input id="lng" type="number" step="any" value="77.5999" required />
+                  </label>
+                </div>
+
+                <p id="wardHint" class="hint-text">Ward 12 · Riverside will receive this report.</p>
+              </div>
+
+              <div class="upload-box">
+                <label class="upload-zone">
+                  <span class="upload-plus">＋</span>
+                  <span>Upload photo evidence</span>
+                  <input id="photo" type="file" accept="image/*" />
+                </label>
+
+                <div class="preview-wrapper">
+                  <img id="preview" src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=900&q=80" alt="Issue preview" />
+                </div>
+              </div>
+
+              <div class="submit-row">
+                <button type="submit" class="button primary">Submit report</button>
+                <output id="message" aria-live="polite"></output>
+              </div>
+            </form>
+          </div>
+
+          <div class="side-stack">
+            <div class="glass-panel summary-panel">
+              <span class="eyebrow small">Auto match</span>
+              <h3>Ward intelligence</h3>
+
+              <div class="ward-box">
+                <strong id="wardName">Ward 12 · Riverside</strong>
+                <span id="wardZone">North civic zone · 98% match</span>
+                <hr />
+                <span>Ward officer: M. S. Nandini</span>
+                <span>Service area: Central civic zone</span>
+                <span>Priority: High</span>
+              </div>
+            </div>
+
+            <div class="glass-panel summary-panel">
+              <span class="eyebrow small">Response SLA</span>
+              <h3>Priority model</h3>
+              <ul class="check-list">
+                <li>Critical stormwater risk</li>
+                <li>Blocked drains within 24h</li>
+                <li>Flooding and street safety</li>
+                <li>Escalate after 48h if unresolved</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
