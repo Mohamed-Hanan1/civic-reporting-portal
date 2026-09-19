@@ -1,4 +1,4 @@
-name: Deploy UrbanCare 360 to GitHub Pages
+name: Deploy DrainWatch to GitHub Pages
 
 on:
   workflow_dispatch:
