@@ -1,482 +1,219 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Civic reporting portal for reporting civic issues, ward identification, ticket tracking, and escalation workflows."
-    />
-    <title>UrbanCare 360 | Civic Reporting Portal</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-      crossorigin=""
-    />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div class="bg-grid"></div>
-    <div class="orb orb-one"></div>
-    <div class="orb orb-two"></div>
-    <div class="orb orb-three"></div>
-
-    <header class="topbar shell">
-      <div class="brand-wrap">
-        <div class="brand-mark">U</div>
-        <div>
-          <div class="brand-name">UrbanCare 360</div>
-          <div class="brand-tag">Smart civic response</div>
-        </div>
-      </div>
-
-      <nav class="topnav" aria-label="Main navigation">
-        <a href="#report-flow">Report</a>
-        <a href="#ward-panel">Ward ID</a>
-        <a href="#ticket-panel">Ticket</a>
-        <a href="#status-board">Status</a>
-        <a href="#escalation-board">Escalation</a>
-      </nav>
-
-      <button class="ghost-btn" type="button">Public dashboard</button>
-    </header>
-
-    <main class="shell">
-      <section class="hero">
-        <div class="hero-copy">
-          <p class="eyebrow">Civic action platform</p>
-          <h1>Report issues, verify your ward, and track resolution in real time.</h1>
-          <p class="lede">
-            Capture a photo, locate the fault, auto-match the correct local-body ward,
-            create a public ticket, and escalate unresolved problems to the right team.
-          </p>
-
-          <div class="cta-row">
-            <a href="#report-flow" class="primary-btn">Create report</a>
-            <a href="#map-view" class="secondary-btn">Open map</a>
-          </div>
-
-          <div class="hero-metrics">
-            <div class="metric-card">
-              <strong>1.2k</strong>
-              <span>Open cases</span>
-            </div>
-            <div class="metric-card">
-              <strong>84%</strong>
-              <span>Resolved in SLA</span>
-            </div>
-            <div class="metric-card">
-              <strong>32m</strong>
-              <span>Avg. response</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="hero-visual glass-panel">
-          <div class="visual-head">
-            <span class="dot green"></span>
-            <span class="dot orange"></span>
-            <span class="dot blue"></span>
-          </div>
-
-          <div class="mini-dashboard">
-            <div class="mini-card highlight">
-              <small>Ward match</small>
-              <strong id="miniWard">Ward 12 · Riverside</strong>
-            </div>
-            <div class="mini-stats">
-              <div>
-                <small>Priority</small>
-                <strong>High</strong>
-              </div>
-              <div>
-                <small>Tickets</small>
-                <strong>18</strong>
-              </div>
-            </div>
-            <div class="signal-line">
-              <span class="bar b1"></span>
-              <span class="bar b2"></span>
-              <span class="bar b3"></span>
-              <span class="bar b4"></span>
-              <span class="bar b5"></span>
-              <span class="bar b6"></span>
-            </div>
-            <div class="mini-status-grid">
-              <span class="pill success">Open</span>
-              <span class="pill warning">Escalation</span>
-              <span class="pill info">Verified</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="report-flow" class="report-panel glass-panel">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Step 1</p>
-            <h2>Report an issue</h2>
-          </div>
-          <span class="status-badge neutral">Public reporting</span>
-        </div>
-
-        <form id="reportForm" class="report-form">
-          <div class="input-grid two-col">
-            <label>
-              <span>Reporter name</span>
-              <input id="reporterName" type="text" value="Aisha Rahman" required />
-            </label>
-
-            <label>
-              <span>Issue category</span>
-              <select id="category" required>
-                <option value="Road damage">Road damage</option>
-                <option value="Water leak">Water leak</option>
-                <option value="Garbage overflow">Garbage overflow</option>
-                <option value="Streetlight outage">Streetlight outage</option>
-                <option value="Drain blockage">Drain blockage</option>
-                <option value="Public safety">Public safety</option>
-              </select>
-            </label>
-          </div>
-
-          <label>
-            <span>Issue title</span>
-            <input id="issueTitle" type="text" value="Broken manhole cover near school gate" required />
-          </label>
-
-          <label>
-            <span>Issue description</span>
-            <textarea id="description" rows="4" required>Large metal cover is cracked and unsafe for pedestrians. Traffic is diverted around the area during school pickup hours.</textarea>
-          </label>
-
-          <div class="location-panel">
-            <div class="location-header">
-              <div>
-                <span class="eyebrow inline">Location</span>
-                <h3>Pinpoint the problem</h3>
-              </div>
-              <button type="button" id="useLocationBtn" class="secondary-btn small-btn">Use my location</button>
-            </div>
-
-            <div class="input-grid two-col">
-              <label>
-                <span>Latitude</span>
-                <input id="latitude" type="number" step="0.000001" value="12.9573" required />
-              </label>
-
-              <label>
-                <span>Longitude</span>
-                <input id="longitude" type="number" step="0.000001" value="77.5999" required />
-              </label>
-            </div>
-          </div>
-
-          <div class="file-panel">
-            <div class="upload-box">
-              <input id="photoInput" type="file" accept="image/*" />
-              <label for="photoInput" class="upload-label">
-                <span class="upload-ico">+</span>
-                <span>Upload photo evidence</span>
-              </label>
-            </div>
-            <div id="previewArea" class="preview-area">
-              <img
-                id="photoPreview"
-                alt="Selected issue preview"
-                src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=80"
-              />
-            </div>
-          </div>
-
-          <div class="submit-row">
-            <button type="submit" class="primary-btn large-btn">Submit report</button>
-            <div id="submissionStatus" class="status-text" aria-live="polite"></div>
-          </div>
-        </form>
-      </section>
-
-      <section class="info-grid">
-        <article id="ward-panel" class="glass-panel card-panel">
-          <div class="section-heading compact">
-            <div>
-              <p class="eyebrow">Step 2</p>
-              <h2>Ward identification</h2>
-            </div>
-            <span class="status-badge success">Auto-matched</span>
-          </div>
-
-          <div id="wardResult" class="ward-result">
-            <div class="ward-title-wrap">
-              <span class="ward-pin">◎</span>
-              <div>
-                <h3>Ward 12 · Riverside</h3>
-                <p>North civic zone · Zone A1</p>
-              </div>
-            </div>
-            <ul class="ward-meta">
-              <li>Ward officer: M. S. Nandini</li>
-              <li>Service area: Central local body</li>
-              <li>Priority: High</li>
-            </ul>
-          </div>
-
-          <div id="wardMap" class="mini-map" aria-label="Ward map"></div>
-        </article>
-
-        <article id="ticket-panel" class="glass-panel card-panel">
-          <div class="section-heading compact">
-            <div>
-              <p class="eyebrow">Step 3</p>
-              <h2>Ticket summary</h2>
-            </div>
-            <span id="ticketStateBadge" class="status-badge warning">Submitted</span>
-          </div>
-
-          <div class="ticket-box">
-            <div class="ticket-head">
-              <span class="ticket-label">Ticket</span>
-              <strong id="ticketCode">CVC-2418</strong>
-            </div>
-            <div class="ticket-body">
-              <p id="ticketSummary">Broken manhole cover near school gate</p>
-              <div class="ticket-meta">
-                <span id="ticketWard">Ward 12 · Riverside</span>
-                <span id="ticketDept">Public works</span>
-              </div>
-            </div>
-          </div>
-
-          <div id="timeline" class="timeline" aria-live="polite"></div>
-        </article>
-      </section>
-
-      <section id="status-board" class="glass-panel board-panel">
-        <div class="section-heading compact">
-          <div>
-            <p class="eyebrow">Step 4</p>
-            <h2>Public status dashboard</h2>
-          </div>
-          <span class="status-badge neutral">Live public feed</span>
-        </div>
-
-        <div id="statusList" class="status-list"></div>
-      </section>
-
-      <section id="map-view" class="glass-panel map-panel">
-        <div class="section-heading compact">
-          <div>
-            <p class="eyebrow">Step 5</p>
-            <h2>Open report map</h2>
-          </div>
-          <span class="status-badge info">Verified reports</span>
-        </div>
-
-        <div id="openMap" aria-label="Open reports map"></div>
-      </section>
-
-      <section id="escalation-board" class="glass-panel escalation-panel">
-        <div class="section-heading compact">
-          <div>
-            <p class="eyebrow">Step 6</p>
-            <h2>Escalation queue</h2>
-          </div>
-          <span class="status-badge danger">Unresolved > 48h</span>
-        </div>
-
-        <div id="escalationList" class="escalation-list"></div>
-      </section>
-    </main>
-
-    <script
-      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-      crossorigin=""
-    ></script>
-    <script src="app.js"></script>
-  </body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+:root{
+  --bg:#06141f;
+  --panel:rgba(11,27,40,.82);
+  --line:rgba(170,205,226,.18);
+  --text:#eff8ff;
+  --muted:#99b5c9;
+  --mint:#7cf0d6;
+  --blue:#91a7ff;
+  --amber:#f7c772;
+  --red:#ff7b7b;
+  --shadow:0 24px 70px #0006;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  color:var(--text);
+  font:15px Inter,system-ui,sans-serif;
+  background:radial-gradient(circle at 10% 0,#16485b66,transparent 28%),radial-gradient(circle at 95% 10%,#38398a55,transparent 30%),linear-gradient(160deg,#06141f,#0b1e2e 55%,#07131e);
+  min-height:100vh;
+}
+.grid{
+  position:fixed;inset:0;pointer-events:none;opacity:.3;
+  background-image:linear-gradient(#fff1 1px,transparent 1px),linear-gradient(90deg,#fff1 1px,transparent 1px);
+  background-size:36px 36px;
+  mask-image:radial-gradient(circle,#000,transparent 80%);
+}
+
+header,main{width:min(1180px,calc(100% - 32px));margin:auto}
+header{
+  position:sticky;top:0;z-index:5;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 0 12px;
+  background:#071722aa;
+  backdrop-filter:blur(15px);
+}
+.brand{
+  display:flex;align-items:center;gap:11px;color:var(--text);text-decoration:none;
+}
+.brand>b{
+  display:grid;place-items:center;width:43px;height:43px;border-radius:14px;color:#06141f;
+  background:linear-gradient(135deg,var(--mint),#9ac8ff);
+  font-size:21px;box-shadow:0 8px 25px #7cf0d655;
+}
+.brand strong,.brand small{display:block}
+.brand strong{letter-spacing:-.04em}
+.brand small{margin-top:3px;color:var(--muted);font-size:10px}
+nav{
+  display:flex;gap:20px;padding:11px 17px;border:1px solid var(--line);border-radius:99px;background:#08192388
+}
+nav a{color:var(--muted);text-decoration:none;font-size:13px}
+nav a:hover{color:var(--mint)}
+a.button{text-decoration:none}
+.button{
+  display:inline-block;border:0;cursor:pointer;border-radius:13px;padding:13px 19px;font-weight:800;
+  color:#06141f;background:linear-gradient(135deg,var(--mint),#9cc7ff);
+  box-shadow:0 10px 25px #7cf0d633;
+}
+.button.ghost{
+  color:var(--text);background:#ffffff08;border:1px solid var(--line);box-shadow:none;
+}
+.button.small{padding:8px 12px;font-size:12px}
+.hero{
+  display:grid;grid-template-columns:1.25fr .75fr;gap:30px;align-items:center;padding:70px 0 36px;
+}
+.eyebrow{
+  margin:0 0 8px;color:var(--mint);font-size:11px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;
+}
+h1,h2,h3,p{margin-top:0}
+h1{
+  margin-bottom:17px;max-width:720px;font-size:clamp(43px,7vw,82px);line-height:.96;letter-spacing:-.09em;
+}
+h2{
+  margin:0;font-size:clamp(24px,3vw,34px);letter-spacing:-.07em;
+}
+.lead{
+  max-width:640px;color:var(--muted);font-size:17px;line-height:1.7;
+}
+.actions{display:flex;gap:12px;margin:27px 0}
+.metrics{display:flex;gap:12px;flex-wrap:wrap}
+.metrics span{
+  min-width:135px;padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:#fff5;
+}
+.metrics b,.metrics small{display:block}
+.metrics b{font-size:24px;letter-spacing:-.06em}
+.metrics small{margin-top:4px;color:var(--muted);font-size:11px}
+
+.hero-card,.panel{
+  border:1px solid var(--line);background:linear-gradient(145deg,#102738dd,#091722cc);box-shadow:var(--shadow);backdrop-filter:blur(12px);
+}
+.hero-card{
+  min-height:350px;padding:20px;border-radius:28px;overflow:hidden;
+}
+.hero-card>i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;background:#7cf0d6}
+.hero-card>i:nth-child(2){background:var(--amber)}
+.hero-card>i:nth-child(3){background:#9cc7ff}
+.signal{margin-top:35px;padding:22px;border:1px solid #7cf0d633;border-radius:19px;background:#7cf0d60d}
+.signal small,.signal b{display:block}
+.signal small{color:var(--muted);font-size:10px}
+.signal b{margin-top:9px;font-size:19px}
+.bars{height:110px;display:flex;align-items:end;gap:10px;padding:18px 15px}
+.bars em{
+  width:16%;height:var(--h,50%);border-radius:9px 9px 0 0;background:linear-gradient(#7cf0d6,#7197fb);
+  animation:pulse 1.4s infinite alternate;
+}
+.bars em:nth-child(1){--h:25%}
+.bars em:nth-child(2){--h:44%}
+.bars em:nth-child(3){--h:72%}
+.bars em:nth-child(4){--h:55%}
+.bars em:nth-child(5){--h:91%}
+.bars em:nth-child(6){--h:70%}
+
+.tags{display:flex;gap:8px;flex-wrap:wrap}
+.tags span,.badge{
+  border:1px solid #7cf0d633;border-radius:99px;padding:7px 10px;color:var(--mint);font-size:10px;font-weight:800;text-transform:uppercase;
+}
+.panel{margin-top:24px;padding:24px;border-radius:25px}
+.heading{
+  display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:20px;
+}
+.badge{color:var(--muted);border-color:var(--line);background:#fff4}
+.badge.green{color:#9af2c6;border-color:#6ee7b144;background:#6ee7b114}
+.badge.amber{color:#f8d188;border-color:#f7c77244;background:#f7c77214}
+.badge.blue{color:#a9d9ff;border-color:#6bbaf944;background:#6bbaf914}
+.badge.red{color:#ffb0b0;border-color:#ff7b7b44;background:#ff7b7b14}
+
+form{display:grid;gap:17px}
+.cols,.twocol{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+label{display:grid;gap:8px;color:var(--muted);font-size:12px}
+input,select,textarea{
+  width:100%;border:1px solid var(--line);outline:0;border-radius:12px;padding:13px;background:#061520cc;color:var(--text);font:inherit;
+}
+input:focus,select:focus,textarea:focus{border-color:var(--mint);box-shadow:0 0 0 4px #7cf0d611}
+.location{padding:17px;border:1px solid var(--line);border-radius:17px;background:#fff3}
+.location .heading{margin-bottom:12px}
+.location h3{margin:0;font-size:18px}
+.hint{margin:12px 0 0;color:var(--mint);font-size:12px}
+.upload{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.drop{
+  min-height:190px;display:grid;place-items:center;border:1px dashed #7cf0d688;border-radius:17px;background:#7cf0d60b;color:var(--mint);font-size:38px;text-align:center;
+}
+.drop span{display:block;color:var(--text);font-size:13px}
+.drop input{display:none}
+.upload img{width:100%;height:190px;object-fit:cover;border-radius:17px;border:1px solid var(--line)}
+.submit{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.submit output{color:var(--mint);font-weight:700}
+.twocol{align-items:stretch}
+.wardbox,.ticket{display:grid;gap:10px;padding:18px;border:1px solid var(--line);border-radius:17px;background:#7cf0d609}
+.wardbox strong{font-size:22px;letter-spacing:-.06em}
+.wardbox span,.ticket span{color:var(--muted);font-size:13px}
+.wardbox hr{width:100%;border:0;border-top:1px solid var(--line)}
+.mini-map,.map{
+  position:relative;overflow:hidden;border-radius:18px;background-color:#092331;
+  background-image:linear-gradient(28deg,transparent 47%,#7cf0d622 48%,#7cf0d622 50%,transparent 51%),linear-gradient(140deg,transparent 46%,#91a7ff22 47%,#91a7ff22 49%,transparent 50%);
+  background-size:100px 100px;
+}
+.mini-map{height:220px;margin-top:17px}
+.map{height:430px}
+.map:after,.mini-map:after{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 20% 30%,#7cf0d622,transparent 20%),radial-gradient(circle at 75% 65%,#91a7ff22,transparent 25%);
+}
+.map-road{position:absolute;display:block;height:9px;background:#fff3;border-radius:99px;transform:rotate(-25deg);z-index:1}
+.r1{width:80%;top:35%;left:5%}
+.r2{width:70%;top:65%;left:20%;transform:rotate(24deg)}
+.r3{width:50%;top:18%;left:40%;transform:rotate(82deg)}
+.pin{position:absolute;z-index:2;display:grid;place-items:center;width:34px;height:34px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--mint);color:#06141f;box-shadow:0 0 0 7px #7cf0d633}
+.pin::first-letter{transform:rotate(45deg)}
+.p1{top:30%;left:31%}
+.p2{top:61%;left:64%;background:var(--amber)}
+.p3{top:16%;left:72%;background:#91a7ff}
+.map-label{
+  position:absolute;z-index:3;left:20px;bottom:18px;padding:12px 15px;border:1px solid var(--line);border-radius:12px;background:#06141fd9;color:var(--mint);font-size:11px;font-weight:800;letter-spacing:.1em;
+}
+.map-label small{color:var(--muted);font-weight:400;letter-spacing:0}
+.ticket small{color:var(--muted);font-size:10px;letter-spacing:.1em}
+.ticket>b{font-size:27px;letter-spacing:-.07em;color:var(--mint)}
+.ticket>strong{font-size:17px}
+.ticket span{display:flex;justify-content:space-between;gap:10px}
+.ticket i{font-style:normal}
+.timeline{display:grid;gap:13px;margin-top:18px}
+.timeline div{border-left:2px solid var(--mint);padding-left:14px}
+.timeline b,.timeline span{display:block}
+.timeline b{font-size:13px}
+.timeline span{margin-top:4px;color:var(--muted);font-size:12px;line-height:1.5}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.card{padding:17px;border:1px solid var(--line);border-radius:16px;background:#fff3}
+.card b{display:block;font-size:18px}
+.card span{display:inline-block;margin:10px 0;color:var(--mint);font-size:10px;text-transform:uppercase}
+.card p{color:var(--muted);font-size:13px;line-height:1.5}
+.escalation{
+  display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:center;padding:15px 0;border-bottom:1px solid var(--line);
+}
+.escalation:last-child{border-bottom:0}
+.escalation strong,.escalation small{display:block}
+.escalation small{margin-top:5px;color:var(--muted)}
+.escalation button{
+  border:1px solid #ff7b7b55;border-radius:10px;padding:9px 12px;background:#ff7b7b12;color:#ffb0b0;cursor:pointer;font-weight:700;
+}
+footer{
+  width:min(1180px,calc(100% - 32px));margin:35px auto;padding:30px 0;color:var(--muted);font-size:12px;
+}
+@keyframes pulse{to{transform:scaleY(1.08);opacity:.8}}
+@media(max-width:850px){
+  nav{order:3;width:100%;justify-content:center;flex-wrap:wrap;margin-top:10px}
+  header{flex-wrap:wrap}
+  .hero,.twocol,.upload{grid-template-columns:1fr}
+  .cards{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:560px){
+  .cols,.cards{grid-template-columns:1fr}
+  .hero{padding-top:42px}
+  .actions{flex-direction:column}
+  .actions .button{width:100%;text-align:center}
+  .heading{align-items:flex-start;flex-direction:column}
+  .escalation{grid-template-columns:1fr}
+  .map{height:330px}
+}
